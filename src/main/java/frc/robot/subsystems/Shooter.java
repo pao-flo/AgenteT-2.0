@@ -32,7 +32,7 @@ public class Shooter extends SubsystemBase {
         if(getAButton == true){
             shooter.set(0.8);
         }else{
-            shooter.set(0.8);
+            shooter.set(0.0);
         }
     }
     

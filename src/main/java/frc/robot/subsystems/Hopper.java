@@ -29,18 +29,27 @@ public class Hopper extends SubsystemBase {
         velocidad = 0;
     }
 //ver dirección
-    public void moveHopper(double yInput){
-        if(Math.abs(yInput)>Constants.kStickTolerance){ //valor absoluto para ir atrás tmbn
-            HmotorD.set(ControlMode.PercentOutput, -yInput);
+    public void moveHopper(boolean getXButton){
+        if(getXButton == true){ //pues si le picas jala si no no
+            HmotorD.set(0.5);
         }else{
-            HmotorD.set(ControlMode.PercentOutput, 0);
+            HmotorD.set(0);
         }
     }
-    public void upperHopper(double yValue){
-        if(yValue>Constants.kStickTolerance){
-            HmotorU.set(ControlMode.PercentOutput, yValue);
+    public void upperHopper(boolean getYButton){
+        if(getYButton == true){
+            HmotorU.set(0.5);
         }else{
-            HmotorU.set(ControlMode.PercentOutput, 0);
+            HmotorU.set(0);
+        }
+    }
+    public void spitHopper(boolean getBButton){
+        if(getBButton == true){
+            HmotorD.set(-0.5);
+            HmotorU.set(-0.5);
+        }else{
+            HmotorD.set(0);
+            HmotorU.set(0);
         }
     }
     
