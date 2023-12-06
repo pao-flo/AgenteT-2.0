@@ -31,25 +31,25 @@ public class Hopper extends SubsystemBase {
 //ver dirección
     public void moveHopper(boolean getXButton){
         if(getXButton == true){ //pues si le picas jala si no no
-            HmotorD.set(0.5);
+            HmotorD.set(ControlMode.PercentOutput, 0.5);
         }else{
-            HmotorD.set(0);
+            HmotorD.set(ControlMode.PercentOutput, 0);
         }
     }
     public void upperHopper(boolean getYButton){
         if(getYButton == true){
-            HmotorU.set(0.5);
+            HmotorU.set(ControlMode.PercentOutput, 0.5);
         }else{
-            HmotorU.set(0);
+            HmotorU.set(ControlMode.PercentOutput, 0);
         }
     }
     public void spitHopper(boolean getBButton){
         if(getBButton == true){
-            HmotorD.set(-0.5);
-            HmotorU.set(-0.5);
+            HmotorD.set(ControlMode.PercentOutput, -0.5);
+            HmotorU.set(ControlMode.PercentOutput, -0.5);
         }else{
-            HmotorD.set(0);
-            HmotorU.set(0);
+            HmotorD.set(ControlMode.PercentOutput, 0);
+            HmotorU.set(ControlMode.PercentOutput, 0);
         }
     }
     
