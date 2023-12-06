@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
     //mTankDrive.outputTelemetry();
     mHopper.moveHopper(mControlBoard.left_y_stick_mecanisms());
     mHopper.upperHopper(mControlBoard.right_y_stick_mecanisms());
-    mShooter.shoot(mControlBoard.mecanisms_a_button());
+    //mShooter.shoot(mControlBoard.mecanisms_a_button());
     //mLeds.setColor();
     //mIntake.eat(mControlBoard.right_trigger_mecanisms(), mControlBoard.left_trigger_mecanisms());
     //mIntakeBox.getBox(mControlBoard.mecanisms_x_button(), mControlBoard.mecanisms_y_button());

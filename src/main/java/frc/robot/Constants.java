@@ -10,9 +10,9 @@ public final class Constants {
   public static final double kStickTolerance = 0.15;
 
   //--------------------chassis--------------//
-  public static final int kDriveRight1 = 6;
-  public static final int kDriveRight2 = 4;
-  public static final int kDriveLeft1 = 1;
+  public static final int kDriveRight1 = 1;
+  public static final int kDriveRight2 = 6;
+  public static final int kDriveLeft1 = 4;
   public static final int kDriveLeft2 = 2;
 
   //--------------------intake--------------//
@@ -21,14 +21,14 @@ public final class Constants {
   public static final int kSolenoid2 = 2;
 
   //--------------------hopper--------------//
-  public static final int kHopperD = 14;
-  public static final int kHopperU = 7;
+  public static final int kHopperD = 7;
+  public static final int kHopperU = 10;
 
   //--------------------shooter--------------//
-  public static final int kShooter = 8;
+  public static final int kShooter = 3;
 
   //----------------intake cajas-------------//
-  public static final int kCIntakeL = 10;
+  public static final int kCIntakeL = 14;
   public static final int kCIntakeR = 11;
   //--------------test
   public static final int kLedsAllLedsSize = 101;

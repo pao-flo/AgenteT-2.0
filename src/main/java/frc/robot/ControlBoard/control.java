@@ -74,28 +74,28 @@ public class control {
     }
     //mecanismos
     public double left_x_stick_mecanisms(){
-        double xValue = mecanisms.getRawAxis(1);
+        double xValue = mecanisms.getRawAxis(0);
         if (Math.abs(xValue)<tolerance){
             xValue = 0;
         }
         return xValue;
     }
     public double left_y_stick_mecanisms(){
-        double yValue = mecanisms.getRawAxis(0);
+        double yValue = mecanisms.getRawAxis(1);
         if (Math.abs(yValue)<tolerance){
             yValue = 0;
         }
         return yValue;
     }
     public double right_x_stick_mecanisms(){
-        double xValue = mecanisms.getRawAxis(3);
+        double xValue = mecanisms.getRawAxis(4);
         if (Math.abs(xValue)<tolerance){
             xValue = 0;
         }
         return xValue;
     }
     public double right_y_stick_mecanisms(){
-        double yValue = mecanisms.getRawAxis(4);
+        double yValue = mecanisms.getRawAxis(5);
         if (Math.abs(yValue)<tolerance){
             yValue = 0;
         }
