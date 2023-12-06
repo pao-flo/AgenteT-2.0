@@ -78,7 +78,16 @@ public class TankDrive extends SubsystemBase {
         Right2.set(ControlMode.PercentOutput, rightSpeed);
         Left1.set(ControlMode.PercentOutput, -leftSpeed);
         Left2.set(ControlMode.PercentOutput, -leftSpeed);
-      }
+    }
+
+    public void outMotoresAuto( double frontRightDemand, double backRightDemand, 
+    double frontLeftDemand, double backleftDemand ){
+      Right1.set(ControlMode.PercentOutput, frontRightDemand);
+      Right2.set(ControlMode.PercentOutput, backRightDemand);
+      Left1.set(ControlMode.PercentOutput, frontLeftDemand);
+      Left2.set(ControlMode.PercentOutput, backleftDemand);
+    }
+
     public void stop(){
         velocidad=0;
     }

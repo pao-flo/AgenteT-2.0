@@ -15,6 +15,11 @@ import frc.robot.subsystems.TankDrive;
 import frc.robot.subsystems.Leds.State;
 import frc.robot.subsystems.Leds;
 
+//Auto
+import frc.robot.Auto.Actions.GetTimeAction;
+import frc.robot.Auto.Actions.MoveForwardAction;
+import frc.robot.Auto.Actions.StopAction;
+
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
@@ -25,6 +30,11 @@ public class Robot extends TimedRobot {
   private Leds mLeds;
   //private Intake mIntake;
   //private IntakeBox mIntakeBox;
+  
+    //Inicialización acciones autónomo
+  GetTimeAction mAutoTimer = new GetTimeAction();
+  MoveForwardAction mMoveForwardAction = new MoveForwardAction();
+  StopAction mStopAction = new StopAction();
   
   private static final int PDH_CAN_ID = 1;
   private static final int NUM_PDH_CHANNELS = 24;
@@ -44,6 +54,7 @@ public class Robot extends TimedRobot {
     mLeds = new Leds();
     //mIntake = new Intake();
     //mIntakeBox = new IntakeBox();
+
   }
 
   @Override
@@ -54,7 +65,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     //mLeds.setColorDisabled();
-    mLeds.SetState(State.Disable);
+    mLeds.SetState(State.IsClimbing);
   }
 
   @Override
@@ -64,14 +75,20 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    mAutoTimer.autoRelativeTimeControl();
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    mLeds.SetState(State.Aiming);
+    mAutoTimer.autoAbsoluteTimeControl(); //inicializa el timeStap absoluto
+    double difTime = mAutoTimer.getAbsoluteTimer()-mAutoTimer.getRelativeTimer();
+    if(difTime<3){
+      mMoveForwardAction.finalMoveForwardACtion();
+    }
+    else mStopAction.finalStopAction();
+
+  }
 
   @Override
   public void teleopInit() {
@@ -83,13 +100,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    mLeds.SetState(State.Disable);
     mTankDrive.avanzar(mControlBoard.left_y_stick_driver(), mControlBoard.right_x_stick_driver());
     double angle = mTankDrive.navx.getYaw();
     SmartDashboard.putNumber("angle", angle);
 
     //mTankDrive.outputTelemetry();
-    mHopper.moveHopper(mControlBoard.mecanisms_x_button());
-    mHopper.upperHopper(mControlBoard.mecanisms_y_button());
+    mHopper.moveHopper(mControlBoard.left_y_stick_mecanisms());
+    mHopper.upperHopper(mControlBoard.right_y_stick_mecanisms());
     mHopper.spitHopper(mControlBoard.mecanisms_b_button());
     mShooter.shoot(mControlBoard.mecanisms_a_button());
     //mLeds.setColor();
