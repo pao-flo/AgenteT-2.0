@@ -108,8 +108,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("angle", angle);
 
     //mTankDrive.outputTelemetry();
-    mHopper.moveDownHopper(mControlBoard.mecanisms_left_bumper(),mControlBoard.mecanisms_b_button());
-    mHopper.moveUpperHopper(mControlBoard.mecanisms_rigth_bumper(),mControlBoard.mecanisms_b_button());
+    mHopper.moveDownHopper(mControlBoard.mecanisms_x_button(),mControlBoard.mecanisms_b_button());
+    mHopper.moveUpperHopper(mControlBoard.mecanisms_y_button(),mControlBoard.mecanisms_b_button());
     //mHopper.spitHopper(mControlBoard.mecanisms_b_button());
     mShooter.shoot(mControlBoard.mecanisms_a_button());
     mControlBoard.outputTelemetry();
