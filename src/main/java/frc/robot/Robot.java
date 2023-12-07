@@ -14,6 +14,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TankDrive;
 import frc.robot.subsystems.Leds.State;
 import frc.robot.subsystems.Leds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Auto
 import frc.robot.Auto.Actions.GetTimeAction;
@@ -71,6 +72,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     mTankDrive.outputTelemetry();
+    mControlBoard.outputTelemetry();
   }
 
   @Override
@@ -106,10 +108,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("angle", angle);
 
     //mTankDrive.outputTelemetry();
-    mHopper.moveHopper(mControlBoard.left_y_stick_mecanisms());
-    mHopper.upperHopper(mControlBoard.right_y_stick_mecanisms());
-    mHopper.spitHopper(mControlBoard.mecanisms_b_button());
+    mHopper.moveDownHopper(mControlBoard.mecanisms_left_bumper(),mControlBoard.mecanisms_b_button());
+    mHopper.moveUpperHopper(mControlBoard.mecanisms_rigth_bumper(),mControlBoard.mecanisms_b_button());
+    //mHopper.spitHopper(mControlBoard.mecanisms_b_button());
     mShooter.shoot(mControlBoard.mecanisms_a_button());
+    mControlBoard.outputTelemetry();
     //mLeds.setColor();
     //mIntake.eat(mControlBoard.right_trigger_mecanisms(), mControlBoard.left_trigger_mecanisms());
     //mIntakeBox.getBox(mControlBoard.mecanisms_x_button(), mControlBoard.mecanisms_y_button());

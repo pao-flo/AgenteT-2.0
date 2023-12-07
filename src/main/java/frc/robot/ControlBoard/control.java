@@ -2,6 +2,7 @@ package frc.robot.ControlBoard;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class control {
     //hardware
@@ -114,6 +115,12 @@ public class control {
     public boolean mecanisms_y_button(){
         return mecanisms.getYButton();
     }
+    public boolean mecanisms_left_bumper(){
+        return mecanisms.getLeftBumper();
+    }
+    public boolean mecanisms_rigth_bumper(){
+        return mecanisms.getRightBumper();
+    }
 
     public double left_trigger_mecanisms(){
         double tValue = mecanisms.getLeftTriggerAxis();
@@ -128,6 +135,10 @@ public class control {
             tValue = 0;
         }
         return tValue;
+    }
+
+    public void outputTelemetry(){
+        SmartDashboard.putBoolean("boton Y", mecanisms.getYButton());
     }
 
 
