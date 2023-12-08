@@ -58,8 +58,8 @@ public class TankDrive extends SubsystemBase {
     //------------------------funciones del subsystema---------------//
     public void avanzar(double yInput, double xInput){
         if(yInput>0){
-        rightSpeed = yInput - xInput;
-        leftSpeed = yInput + xInput;
+        rightSpeed = yInput + xInput;
+        leftSpeed = yInput - xInput;
         }else{
         rightSpeed = yInput + xInput;
         leftSpeed = yInput - xInput;

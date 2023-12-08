@@ -6,6 +6,6 @@ public class MoveForwardAction{
   TankDrive mAutoDrive = new TankDrive();
   
   public void finalMoveForwardACtion(){
-    mAutoDrive.outMotoresAuto(0.3, 0.3, -0.3, -0.3);;
+    mAutoDrive.outMotoresAuto(-0.3, -0.3, 0.3, 0.3);;
   }
 }

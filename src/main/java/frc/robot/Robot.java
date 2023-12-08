@@ -25,6 +25,9 @@ import frc.robot.Auto.Actions.MoveForwardAction;
 import frc.robot.Auto.Actions.StopAction;
 import frc.robot.Auto.Actions.TurnLeftAction;
 import frc.robot.Auto.Actions.TurnRightAction;
+import frc.robot.Auto.Actions.LeaveBoxAction;
+import frc.robot.Auto.Actions.MoveWithBoxIntake;
+//import frc.robot.Auto.Actions.ShootAction;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -46,6 +49,9 @@ public class Robot extends TimedRobot {
   TurnLeftAction mTurnLeftAction = new TurnLeftAction();
   TurnRightAction mTurnRightAction = new TurnRightAction();
   MoveBackAction mMoveBackAction = new MoveBackAction();
+  LeaveBoxAction mLeaveBoxAction = new LeaveBoxAction();
+  MoveWithBoxIntake mMoveWithBoxIntake = new MoveWithBoxIntake();
+  //ShootAction mShootAction = new ShootAction();
   
   private static final int PDH_CAN_ID = 1;
   private static final int NUM_PDH_CHANNELS = 24;
@@ -111,8 +117,32 @@ public class Robot extends TimedRobot {
       mMoveForwardAction.finalMoveForwardACtion();
     }
     else mStopAction.finalStopAction();*/
-    
+
+    double difTime = mAutoTimer.getAbsoluteTimer()-mAutoTimer.getRelativeTimer();
+    if(difTime<1.65){
+      mMoveForwardAction.finalMoveForwardACtion();
+    }else if(difTime>1.65 && difTime<1.95){
+      mTurnRightAction.finalTurnRightACtion();
+    }else if(difTime>1.95 && difTime<3.35){
+      mMoveForwardAction.finalMoveForwardACtion();
+    }else if(difTime>3.35 && difTime<3.55){
+      mLeaveBoxAction.finalLeaveBoxAction(); //aqui jala 
+    }else if(difTime>3.55 && difTime<4.15){
+      mMoveBackAction.finalMoveBackACtion(); //acatoy
+    }else if(difTime>4.15 && difTime<4.85){
+      mTurnLeftAction.finalTurnLeftACtion();
+    }else if(difTime>4.85 && difTime<5.7){
+      mMoveWithBoxIntake.finalMoveWithBoxIntake();
+    }else if(difTime>5.7 && difTime<6.7){
+      mMoveBackAction.finalMoveBackACtion();
+    }else if(difTime>6.7 && difTime<7.4){
+      mTurnRightAction.finalTurnRightACtion();
+    }else if(difTime>7.4 && difTime<7.7){
+      mLeaveBoxAction.finalLeaveBoxAction();
+    }
+    else mStopAction.finalStopAction();
   }
+    
 
   @Override
   public void teleopInit() {
@@ -124,18 +154,20 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    mLeds.SetState(State.Teleop);
+    mLeds.SetState(State.Auto);
     mTankDrive.avanzar(mControlBoard.left_y_stick_driver(), mControlBoard.right_x_stick_driver());
     double angle = mTankDrive.navx.getYaw();
     SmartDashboard.putNumber("angle", angle);
-
-    mHopper.moveDownHopper(mControlBoard.mecanisms_x_button(),mControlBoard.mecanisms_b_button());
-    mHopper.moveUpperHopper(mControlBoard.mecanisms_y_button(),mControlBoard.mecanisms_b_button());
-    mShooter.shoot(mControlBoard.mecanisms_a_button());
-    mShooter.shootWithHopper(mControlBoard.mecanisms_rigth_bumper());
+    
     mControlBoard.outputTelemetry();
     mIntake.eat(mControlBoard.right_y_stick_mecanisms());
     mIntakeBox.eatBox(mControlBoard.left_y_stick_mecanisms());
+    mShooter.shoot(mControlBoard.mecanisms_a_button(), mControlBoard.mecanisms_rigth_bumper());
+  
+    mHopper.moveDownHopper(mControlBoard.mecanisms_x_button(),mControlBoard.mecanisms_b_button());
+    mHopper.moveUpperHopper(mControlBoard.mecanisms_y_button(),mControlBoard.mecanisms_b_button());
+
+    //mShooter.shootWithHopper(mControlBoard.mecanisms_rigth_bumper());
     //mIntakeBox.getBox(mControlBoard.mecanisms_x_button(), mControlBoard.mecanisms_y_button());
   }
 

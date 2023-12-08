@@ -49,12 +49,24 @@ public class IntakeBox extends SubsystemBase {
     public void eatBox(double lstick){
         if(lstick>Constants.kStickTolerance){
             RCintake.set(ControlMode.PercentOutput, lstick);
-            LCintake.set(ControlMode.PercentOutput, lstick);
-        }else {
+            LCintake.set(ControlMode.PercentOutput, -lstick);
+        }else if(lstick<Constants.kStickTolerance){
+            RCintake.set(ControlMode.PercentOutput, lstick);
+            LCintake.set(ControlMode.PercentOutput, -lstick);
+        }else{
             RCintake.set(ControlMode.PercentOutput, 0);
             LCintake.set(ControlMode.PercentOutput, 0);
         }
 
+    }
+    public void LeaveBoxAuto(double velocity){
+        RCintake.set(ControlMode.PercentOutput, velocity);
+        LCintake.set(ControlMode.PercentOutput, -velocity);
+    }
+
+    public void EatBoxAuto(double velocity){
+        RCintake.set(ControlMode.PercentOutput, -velocity);
+        LCintake.set(ControlMode.PercentOutput, velocity);
     }
     
 

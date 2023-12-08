@@ -34,15 +34,28 @@ public class Shooter extends SubsystemBase {
         velocidad = 0;
     }
 //ver dirección
-    public void shoot(Boolean getAButton){
+    public void shoot(Boolean getAButton, boolean rbumper){
         if(getAButton == true){
             shooter.set(-1);
-        }else{
+        }else if(rbumper){
+            shooter.set(-1);
+            HmotorD.set(ControlMode.PercentOutput, 0.3);
+            HmotorU.set(ControlMode.PercentOutput, -0.5);
+        }
+        else{
             shooter.set(0.0);
+            HmotorD.set(ControlMode.PercentOutput, 0);
+            HmotorU.set(ControlMode.PercentOutput, 0);
         }
     }
 
-    public void shootWithHopper(boolean rbumper){
+    public void AutoShoot(double velocity){
+        shooter.set(velocity);
+        HmotorD.set(ControlMode.PercentOutput, 0.3);
+        HmotorU.set(ControlMode.PercentOutput, -0.5);
+    }
+
+    /*public void shootWithHopper(boolean rbumper){
         if(rbumper){
             shooter.set(-1);
             HmotorD.set(ControlMode.PercentOutput, 0.5);
@@ -53,7 +66,7 @@ public class Shooter extends SubsystemBase {
             HmotorU.set(ControlMode.PercentOutput, 0);
         }
 
-    }
+    }*/
     
 
     public void stop(){
