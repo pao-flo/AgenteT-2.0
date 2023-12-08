@@ -8,34 +8,44 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.ControlBoard.control;
 import frc.robot.subsystems.Hopper;
-//import frc.robot.subsystems.Intake;
-//import frc.robot.subsystems.IntakeBox;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeBox;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TankDrive;
 import frc.robot.subsystems.Leds.State;
 import frc.robot.subsystems.Leds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 
 //Auto
 import frc.robot.Auto.Actions.GetTimeAction;
+import frc.robot.Auto.Actions.MoveBackAction;
 import frc.robot.Auto.Actions.MoveForwardAction;
 import frc.robot.Auto.Actions.StopAction;
+import frc.robot.Auto.Actions.TurnLeftAction;
+import frc.robot.Auto.Actions.TurnRightAction;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  public AHRS navx;
+  double angle;
 
   private TankDrive mTankDrive;
   private control mControlBoard;
   private Hopper mHopper;
   private Shooter mShooter;
   private Leds mLeds;
-  //private Intake mIntake;
-  //private IntakeBox mIntakeBox;
+  private Intake mIntake;
+  private IntakeBox mIntakeBox;
   
-    //Inicialización acciones autónomo
+  //Inicialización acciones autónomo
   GetTimeAction mAutoTimer = new GetTimeAction();
   MoveForwardAction mMoveForwardAction = new MoveForwardAction();
   StopAction mStopAction = new StopAction();
+  TurnLeftAction mTurnLeftAction = new TurnLeftAction();
+  TurnRightAction mTurnRightAction = new TurnRightAction();
+  MoveBackAction mMoveBackAction = new MoveBackAction();
   
   private static final int PDH_CAN_ID = 1;
   private static final int NUM_PDH_CHANNELS = 24;
@@ -53,9 +63,18 @@ public class Robot extends TimedRobot {
     mHopper = new Hopper();
     mShooter = new Shooter();
     mLeds = new Leds();
-    //mIntake = new Intake();
-    //mIntakeBox = new IntakeBox();
+    mIntake = new Intake();
+    mIntakeBox = new IntakeBox();
 
+    try{
+      navx = new AHRS(SPI.Port.kMXP);
+      Timer.delay(0.5);
+      navx.reset();
+      Timer.delay(0.5);
+    }
+    catch(Exception e){
+      System.out.println("navx not working");
+    }
   }
 
   @Override
@@ -66,7 +85,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     //mLeds.setColorDisabled();
-    mLeds.SetState(State.IsClimbing);
+    mLeds.SetState(State.Disable);
   }
 
   @Override
@@ -78,18 +97,21 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     mAutoTimer.autoRelativeTimeControl();
+    angle = navx.getAngle();
   }
 
   @Override
   public void autonomousPeriodic() {
-    mLeds.SetState(State.Aiming);
+    mLeds.SetState(State.Auto);
     mAutoTimer.autoAbsoluteTimeControl(); //inicializa el timeStap absoluto
-    double difTime = mAutoTimer.getAbsoluteTimer()-mAutoTimer.getRelativeTimer();
-    if(difTime<3){
+    //Autónomo que solo avanza
+    //Angulo para disparar -27.6
+    /*double difTime = mAutoTimer.getAbsoluteTimer()-mAutoTimer.getRelativeTimer();
+    if(difTime<2.5){
       mMoveForwardAction.finalMoveForwardACtion();
     }
-    else mStopAction.finalStopAction();
-
+    else mStopAction.finalStopAction();*/
+    
   }
 
   @Override
@@ -102,19 +124,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    mLeds.SetState(State.Disable);
+    mLeds.SetState(State.Teleop);
     mTankDrive.avanzar(mControlBoard.left_y_stick_driver(), mControlBoard.right_x_stick_driver());
     double angle = mTankDrive.navx.getYaw();
     SmartDashboard.putNumber("angle", angle);
 
-    //mTankDrive.outputTelemetry();
     mHopper.moveDownHopper(mControlBoard.mecanisms_x_button(),mControlBoard.mecanisms_b_button());
     mHopper.moveUpperHopper(mControlBoard.mecanisms_y_button(),mControlBoard.mecanisms_b_button());
-    //mHopper.spitHopper(mControlBoard.mecanisms_b_button());
     mShooter.shoot(mControlBoard.mecanisms_a_button());
+    mShooter.shootWithHopper(mControlBoard.mecanisms_rigth_bumper());
     mControlBoard.outputTelemetry();
-    //mLeds.setColor();
-    //mIntake.eat(mControlBoard.right_trigger_mecanisms(), mControlBoard.left_trigger_mecanisms());
+    mIntake.eat(mControlBoard.right_y_stick_mecanisms());
+    mIntakeBox.eatBox(mControlBoard.left_y_stick_mecanisms());
     //mIntakeBox.getBox(mControlBoard.mecanisms_x_button(), mControlBoard.mecanisms_y_button());
   }
 

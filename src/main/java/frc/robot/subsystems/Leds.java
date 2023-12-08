@@ -88,7 +88,7 @@ public class Leds {
 	
 
     public Leds() {
-        mLeds = new AddressableLED(5); // se establece el puerto de la RoborIO(pwm output)
+        mLeds = new AddressableLED(0); // se establece el puerto de la RoborIO(pwm output)
         mLedBuffer = new AddressableLEDBuffer(Constants.kLedsAllLedsSize); // se establece el número se LEDs individuales
 		mLeds.setLength(mLedBuffer.getLength());
 		cacheColorCenter = Colors.Black;
@@ -99,14 +99,14 @@ public class Leds {
 
     public void SetState(State ledState){ //para fijar los estados con los leds
 		switch(ledState){
-			case Disable:
+			case Teleop:
 				setColor(Section.All,Colors.Blue);
 				break;
-			case ManualControl:
+			case Auto:
 				setColor(Section.All, Colors.Aqua);
 				break;
-			case Aiming:
-				setColor(Section.All, Colors.Aqua);
+			case Disable:
+				setColor(Section.All, Colors.Purple);
 				break;
 			case PreparingToShoot:
 				setColor(Section.All, Colors.Blue);
@@ -157,7 +157,7 @@ public class Leds {
 				colorvals = new int[]{0,255,0};
 				break;
 			case Aqua:
-				colorvals = new int[]{0,255,255};
+				colorvals = new int[]{0,240,255};
 				break;
 			case Blue:
 				colorvals = new int[]{0,0,255};

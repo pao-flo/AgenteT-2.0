@@ -16,9 +16,7 @@ public final class Constants {
   public static final int kDriveLeft2 = 2;
 
   //--------------------intake--------------//
-  public static final int kIntake = 5;
-  public static final int kSolenoid1 = 1;
-  public static final int kSolenoid2 = 2;
+  public static final int kIntake = 8;
 
   //--------------------hopper--------------//
   public static final int kHopperD = 7;
@@ -28,8 +26,8 @@ public final class Constants {
   public static final int kShooter = 3;
 
   //----------------intake cajas-------------//
-  public static final int kCIntakeL = 14;
-  public static final int kCIntakeR = 11;
+  public static final int kCIntakeL = 9;
+  public static final int kCIntakeR = 5;
   //--------------test
   public static final int kLedsAllLedsSize = 101;
 }

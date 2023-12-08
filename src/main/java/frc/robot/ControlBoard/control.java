@@ -103,6 +103,7 @@ public class control {
         return yValue;
     }
 
+//mecanismos
     public boolean mecanisms_a_button(){
         return mecanisms.getAButton();
     }

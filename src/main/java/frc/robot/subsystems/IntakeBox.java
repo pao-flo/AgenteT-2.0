@@ -29,7 +29,7 @@ public class IntakeBox extends SubsystemBase {
         velocidad = 0;
     }
 //ver dirección
-    public void getBox(boolean getXButton, boolean getYButton){
+    /*public void getBox(boolean getXButton, boolean getYButton){
         if (getXButton == true){
             velocidad=0.4;
             getYButton=false;
@@ -41,6 +41,16 @@ public class IntakeBox extends SubsystemBase {
             RCintake.set(ControlMode.PercentOutput, velocidad);
             LCintake.set(ControlMode.PercentOutput, velocidad);
         }else{
+            RCintake.set(ControlMode.PercentOutput, 0);
+            LCintake.set(ControlMode.PercentOutput, 0);
+        }
+
+    }*/
+    public void eatBox(double lstick){
+        if(lstick>Constants.kStickTolerance){
+            RCintake.set(ControlMode.PercentOutput, lstick);
+            LCintake.set(ControlMode.PercentOutput, lstick);
+        }else {
             RCintake.set(ControlMode.PercentOutput, 0);
             LCintake.set(ControlMode.PercentOutput, 0);
         }
