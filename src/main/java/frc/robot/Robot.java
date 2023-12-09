@@ -119,25 +119,25 @@ public class Robot extends TimedRobot {
     else mStopAction.finalStopAction();*/
 
     double difTime = mAutoTimer.getAbsoluteTimer()-mAutoTimer.getRelativeTimer();
-    if(difTime<1.65){
+    if(difTime<2){
       mMoveForwardAction.finalMoveForwardACtion();
-    }else if(difTime>1.65 && difTime<1.95){
+    }else if(difTime>2 && difTime<2.3){
       mTurnRightAction.finalTurnRightACtion();
-    }else if(difTime>1.95 && difTime<3.35){
+    }else if(difTime>2.3 && difTime<3.7){
       mMoveForwardAction.finalMoveForwardACtion();
-    }else if(difTime>3.35 && difTime<3.55){
+    }else if(difTime>3.7 && difTime<3.9){
       mLeaveBoxAction.finalLeaveBoxAction(); //aqui jala 
-    }else if(difTime>3.55 && difTime<4.15){
+    }else if(difTime>3.9 && difTime<4.5){
       mMoveBackAction.finalMoveBackACtion(); //acatoy
-    }else if(difTime>4.15 && difTime<4.85){
+    }else if(difTime>4.5 && difTime<5.28){
       mTurnLeftAction.finalTurnLeftACtion();
-    }else if(difTime>4.85 && difTime<5.7){
+    }else if(difTime>5.28 && difTime<6.98){
       mMoveWithBoxIntake.finalMoveWithBoxIntake();
-    }else if(difTime>5.7 && difTime<6.7){
+    }else if(difTime>6.98 && difTime<8.38){
       mMoveBackAction.finalMoveBackACtion();
-    }else if(difTime>6.7 && difTime<7.4){
+    }else if(difTime>8.38 && difTime<8.5){
       mTurnRightAction.finalTurnRightACtion();
-    }else if(difTime>7.4 && difTime<7.7){
+    }else if(difTime>8.5  && difTime<8.9){
       mLeaveBoxAction.finalLeaveBoxAction();
     }
     else mStopAction.finalStopAction();
@@ -154,14 +154,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    mLeds.SetState(State.Auto);
+    mLeds.SetState(State.Teleop);
     mTankDrive.avanzar(mControlBoard.left_y_stick_driver(), mControlBoard.right_x_stick_driver());
     double angle = mTankDrive.navx.getYaw();
     SmartDashboard.putNumber("angle", angle);
     
     mControlBoard.outputTelemetry();
-    mIntake.eat(mControlBoard.right_y_stick_mecanisms());
-    mIntakeBox.eatBox(mControlBoard.left_y_stick_mecanisms());
+    mIntake.eat(mControlBoard.left_y_stick_mecanisms());
+    mIntakeBox.eatBox(mControlBoard.right_y_stick_mecanisms());
     mShooter.shoot(mControlBoard.mecanisms_a_button(), mControlBoard.mecanisms_rigth_bumper());
   
     mHopper.moveDownHopper(mControlBoard.mecanisms_x_button(),mControlBoard.mecanisms_b_button());
