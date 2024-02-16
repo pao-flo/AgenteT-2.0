@@ -129,15 +129,15 @@ public class Robot extends TimedRobot {
       mLeaveBoxAction.finalLeaveBoxAction(); //aqui jala 
     }else if(difTime>3.9 && difTime<4.5){
       mMoveBackAction.finalMoveBackACtion(); //acatoy
-    }else if(difTime>4.5 && difTime<5.28){
+    }else if(difTime>4.5 && difTime<5.18){
       mTurnLeftAction.finalTurnLeftACtion();
-    }else if(difTime>5.28 && difTime<6.98){
+    }else if(difTime>5.18 && difTime<6.98){
       mMoveWithBoxIntake.finalMoveWithBoxIntake();
-    }else if(difTime>6.98 && difTime<8.38){
+    }else if(difTime>6.98 && difTime<8){
       mMoveBackAction.finalMoveBackACtion();
-    }else if(difTime>8.38 && difTime<8.5){
+    }else if(difTime>8 && difTime<8.15){
       mTurnRightAction.finalTurnRightACtion();
-    }else if(difTime>8.5  && difTime<8.9){
+    }else if(difTime>8.15 && difTime<8.6){
       mLeaveBoxAction.finalLeaveBoxAction();
     }
     else mStopAction.finalStopAction();

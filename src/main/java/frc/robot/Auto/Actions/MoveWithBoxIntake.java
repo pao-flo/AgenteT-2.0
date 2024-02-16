@@ -9,6 +9,6 @@ public class MoveWithBoxIntake{
   
   public void finalMoveWithBoxIntake(){
     mAutoDrive.outMotoresAuto(-0.3, -0.3, 0.3, 0.3);
-    mAuIntakeBox.EatBoxAuto(0.4);
+    mAuIntakeBox.EatBoxAuto(-0.5);
   }
 }
